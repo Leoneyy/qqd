@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My HTML Page</title>
+  <!-- load the jsPDF library using a CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <!-- load the html2canvas library using a CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+</head>
+<body>
+  <h1>Welcome to My Page</h1>
+  <p>This is some example content.</p>
+  <!-- add the PDF download button -->
+  <button id="pdfButton">Download as PDF</button>
+  <script>
+    // add an event listener to the button
+    document.getElementById("pdfButton").addEventListener("click", function() {
+      // create a new jsPDF instance
+      var doc = new jsPDF();
+
+      // specify the HTML element to be converted
+      var element = document.body;
+
+      // use html2canvas to render the element as an image
+      html2canvas(element).then(function(canvas) {
+        // get the image data as a URL
+        var imgData = canvas.toDataURL('image/png');
+
+        // add the image to the PDF document
+        doc.addImage(imgData, 'PNG', 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height);
+
+        // save the PDF document
+        doc.save('example.pdf');
+      });
+    });
+  </script>
+</body>
+</html>
